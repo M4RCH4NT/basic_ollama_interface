@@ -1,0 +1,11 @@
+{
+    "model_list" : [
+        "phi3:latest",
+        "phi3:14b",
+        "qwen2:7b",
+        "llama3.1:latest",
+        "gemma2:latest",
+        "mistral-nemo:latest"
+    ],
+    "use_theme" : "interface_file/dark_style.qss"
+}

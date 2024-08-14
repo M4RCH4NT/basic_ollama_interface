@@ -1,0 +1,17 @@
+{
+    "model_list" : [
+        "phi3:latest",
+        "phi3:14b",
+        "qwen2:7b",
+        "llama3.1:latest",
+        "gemma2:latest"
+    ],
+    "instructions" : {
+        "Check text" : "Please check the following paragraph for errors and mistakes, and provide possible improvements.\n#$PROMPT$#",
+        "Shorten text" : "Please shorten the following paragraph.\n#$PROMPT$#",
+        "Write out" : "Please write paragraphs about the following summary.\n#$PROMPT$#",
+        "Summarize text" : "Please summarize the following paragraph.\n#$PROMPT$#",
+        "Multi Write out" : "Following are a few short worded summaries from multiple sources. Please write paragraphs combining the content in all these summaries.\n#$PROMPT$#"
+    },
+    "use_theme" : "interface/dark_style.qss"
+}
