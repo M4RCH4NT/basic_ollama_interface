@@ -113,11 +113,12 @@ def Connect_Events(self):
 
 def Process_Text_Prompt_Pressed(self: Ui_MainWindow):
 
-    print(self.combo_model_list.currentText())
-
     model_selected = self.combo_model_list.currentText()
     
     input_text = str(self.plaintext_input_prompt.toPlainText())
+
+    if input_text == "" or input_text == None:
+        return
 
     self.plaintext_input_prompt.setPlainText("")
 

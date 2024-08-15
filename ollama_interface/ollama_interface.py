@@ -125,6 +125,10 @@ def Process_Text_Pressed(self: Ui_MainWindow):
     instruction_selected = self.list_instructions.currentItem().text()
     
     input_text = str(self.plaintext_input.toPlainText())
+
+    if input_text == "" or input_text == None:
+        return
+
     prompt_text = str(self.available_instructions[instruction_selected]).replace("#$PROMPT$#", input_text)
 
     # new_text = infer_text(prompt_text, model_selected)
@@ -153,11 +157,13 @@ def Process_Text_Pressed(self: Ui_MainWindow):
 
 def Process_Text_Prompt_Pressed(self: Ui_MainWindow):
 
-    print(self.combo_model_list.currentText())
-
     model_selected = self.combo_model_list.currentText()
     
     input_text = str(self.plaintext_input_prompt.toPlainText())
+
+    if input_text == "" or input_text == None:
+        return
+
     system_prompt = str(self.plaintext_system_prompt.toPlainText())
 
     self.plaintext_input_prompt.setPlainText("")

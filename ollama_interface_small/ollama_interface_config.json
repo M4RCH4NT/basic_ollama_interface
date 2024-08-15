@@ -7,5 +7,5 @@
         "gemma2:latest",
         "mistral-nemo:latest"
     ],
-    "use_theme" : "interface_file/dark_style.qss"
+    "use_theme" : "interface/dark_style.qss"
 }
