@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QObject, QThread, pyqtSignal
 from interface.interface import Ui_MainWindow
 import ollama, json, os
+import subprocess
 
 def infer_text(text, model):
 
@@ -105,11 +106,18 @@ class OllamaStreamThread(QObject):
 
 
 
-def Connect_Events(self):
+def Connect_Events(self: Ui_MainWindow):
 
     self.button_process_text_prompt.clicked.connect(self.Process_Text_Prompt_Pressed)
     self.button_clear_chat.clicked.connect(self.Clear_Chat)
     
+    self.actionSwitch_To_Big.triggered.connect(self.switch_to_big_clicked)
+
+def switch_to_big_clicked(self: Ui_MainWindow):
+
+    subprocess.Popen(["cd", "../ollama_interface", "&","pythonw", "ollama_interface.py"], shell=True)
+    QtCore.QCoreApplication.quit()
+
 
 def Process_Text_Prompt_Pressed(self: Ui_MainWindow):
 
@@ -251,6 +259,7 @@ if __name__ == "__main__":
     setattr(Ui_MainWindow, "Add_Letter_To_Running_Chat", Add_Letter_To_Running_Chat)
     
     setattr(Ui_MainWindow, "Connect_Events", Connect_Events)
+    setattr(Ui_MainWindow, "switch_to_big_clicked", switch_to_big_clicked)
 
     import sys
     app = QtWidgets.QApplication(sys.argv)

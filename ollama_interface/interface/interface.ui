@@ -927,6 +927,7 @@
     <addaction name="actionPrompt"/>
     <addaction name="actionInference"/>
     <addaction name="actionSettings"/>
+    <addaction name="actionSwitch_To_Small"/>
    </widget>
    <addaction name="menuWindow"/>
   </widget>
@@ -944,6 +945,11 @@
   <action name="actionSettings">
    <property name="text">
     <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionSwitch_To_Small">
+   <property name="text">
+    <string>Switch To Small</string>
    </property>
   </action>
  </widget>

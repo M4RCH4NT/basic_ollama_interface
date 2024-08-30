@@ -140,6 +140,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Window</string>
     </property>
+    <addaction name="actionSwitch_To_Big"/>
    </widget>
    <addaction name="menuPage"/>
   </widget>
@@ -157,6 +158,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionPrompt">
    <property name="text">
     <string>Prompt</string>
+   </property>
+  </action>
+  <action name="actionSwitch_To_Big">
+   <property name="text">
+    <string>Switch To Big</string>
    </property>
   </action>
  </widget>

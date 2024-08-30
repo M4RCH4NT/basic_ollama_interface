@@ -1,8 +1,9 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QObject, QThread, pyqtSignal
+from PyQt5.QtCore import QObject, QThread, pyqtSignal, QCoreApplication
 from interface.interface import Ui_MainWindow
 import ollama, json
 import os
+import subprocess
 
 def infer_text(text, model):
 
@@ -106,7 +107,7 @@ class OllamaStreamThread(QObject):
 
 
 
-def Connect_Events(self):
+def Connect_Events(self: Ui_MainWindow):
 
     self.button_process_text.clicked.connect(self.Process_Text_Pressed)
     self.button_copy_text.clicked.connect(self.Copy_Text_Pressed)
@@ -117,6 +118,14 @@ def Connect_Events(self):
     self.actionInference.triggered.connect(self.inference_menu_bar_clicked)
     self.actionSettings.triggered.connect(self.settings_menu_bar_clicked)
     self.actionPrompt.triggered.connect(self.prompt_menu_bar_clicked)
+
+    self.actionSwitch_To_Small.triggered.connect(switch_to_small_clicked)
+
+
+def switch_to_small_clicked(self: Ui_MainWindow):
+
+    subprocess.Popen(["cd", "../ollama_interface_small", "&","pythonw", "ollama_interface.py"], shell=True)
+    QCoreApplication.quit()
 
 def Process_Text_Pressed(self: Ui_MainWindow):
 
@@ -329,6 +338,7 @@ if __name__ == "__main__":
     setattr(Ui_MainWindow, "prompt_menu_bar_clicked", prompt_menu_bar_clicked)
     setattr(Ui_MainWindow, "inference_menu_bar_clicked", inference_menu_bar_clicked)
     setattr(Ui_MainWindow, "settings_menu_bar_clicked", settings_menu_bar_clicked)
+    setattr(Ui_MainWindow, "switch_to_small_clicked", switch_to_small_clicked)
 
     setattr(Ui_MainWindow, "Clear_Chat", Clear_Chat)
     setattr(Ui_MainWindow, "Add_Letter_To_Running_Chat", Add_Letter_To_Running_Chat)
