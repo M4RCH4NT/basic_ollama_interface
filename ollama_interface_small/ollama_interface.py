@@ -199,14 +199,20 @@ def Enable_Prompt_Board(self):
     self.button_process_text_prompt.setEnabled(True)
     self.button_clear_chat.setEnabled(True)
 
-def Load_Configuration(self):
+def Load_Configuration(self: Ui_MainWindow):
 
     self.configuration = load_json_file("ollama_interface_config.json")
 
     self.combo_model_list.clear()
 
-    for model_name in self.configuration["model_list"]:
+    self.all_models = [model_entry["name"] for model_entry in ollama.list()["models"]]
+    self.all_models.sort()
+
+    for model_name in self.all_models:
         self.combo_model_list.addItem(model_name)
+
+    # for model_name in self.configuration["model_list"]:
+    #     self.combo_model_list.addItem(model_name)
 
 def Resize_Components(self):
 

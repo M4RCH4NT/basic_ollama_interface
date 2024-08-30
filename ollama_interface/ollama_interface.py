@@ -285,9 +285,15 @@ def Load_Configuration(self):
     self.list_models.clear()
     self.combo_model_list.clear()
 
-    for model_name in self.configuration["model_list"]:
-        self.list_models.addItem(model_name)
+    self.all_models = [model_entry["name"] for model_entry in ollama.list()["models"]]
+    self.all_models.sort()
+
+    for model_name in self.all_models:
         self.combo_model_list.addItem(model_name)
+        self.list_models.addItem(model_name)
+
+    # for model_name in self.configuration["model_list"]:
+    #     self.combo_model_list.addItem(model_name)
 
     self.list_models.setCurrentRow(0)
     self.list_instructions.setCurrentRow(0)
