@@ -140,6 +140,14 @@ QPlainTextEdit
     border: 1px solid #3A3939;
 }
 
+QLineEdit
+{
+    background-color: #201F1F;;
+    color: silver;
+    border-radius: 2px;
+    border: 1px solid #3A3939;
+}
+
 QLabel
 {
     color: #3d8ec9;

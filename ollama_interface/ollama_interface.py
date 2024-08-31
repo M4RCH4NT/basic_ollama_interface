@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QObject, QThread, pyqtSignal, QCoreApplication
+from PyQt5.QtCore import QObject, QThread, pyqtSignal, QCoreApplication, QPoint
 from interface.interface import Ui_MainWindow
 import ollama, json
 import os
@@ -81,6 +81,11 @@ def load_json_file(filename) -> dict:
     with open(filename, 'r') as f:
         return json.load(f)
 
+def save_json_file(filename, data: dict):
+
+    with open(filename, 'w') as f:
+        f.write(json.dumps(data, indent=4))
+        f.close()
 
 class OllamaStreamThread(QObject):
 
@@ -120,6 +125,12 @@ def Connect_Events(self: Ui_MainWindow):
     self.actionPrompt.triggered.connect(self.prompt_menu_bar_clicked)
 
     self.actionSwitch_To_Small.triggered.connect(switch_to_small_clicked)
+
+    self.list_instructions_settings.clicked.connect(self.list_item_selected)
+
+    self.button_save_selected.clicked.connect(self.button_save_selected_press)
+    self.button_remove_selected.clicked.connect(self.button_remove_selected_press)
+    self.button_add_new_instruction.clicked.connect(self.button_add_instruction_press)
 
 
 def switch_to_small_clicked(self: Ui_MainWindow):
@@ -301,6 +312,9 @@ def Load_Configuration(self):
     model = self.list_models.currentItem().text()
     print(model)
 
+    self.update_instruction_list_settings()
+
+
 def Switch_To_Prompt_Page(self: Ui_MainWindow):
 
     self.stackedWidget.setCurrentWidget(self.promp_page)
@@ -325,6 +339,77 @@ def inference_menu_bar_clicked(self):
 def settings_menu_bar_clicked(self):
     self.Switch_To_Settings_Page()
 
+def list_item_selected(self: Ui_MainWindow):
+
+    config = load_json_file("ollama_interface_config.json")
+
+    instruction_selected = self.list_instructions_settings.currentItem().text()
+    
+    self.line_edit_selected_title.setText(instruction_selected)
+    self.plaintext_selected_prompt.setPlainText(config["instructions"][instruction_selected])
+
+
+
+def update_instruction_list_settings(self: Ui_MainWindow):
+
+    self.list_instructions_settings.clear()
+
+    config = load_json_file("ollama_interface_config.json")
+
+    all_instructions = list(config["instructions"].keys())
+
+    for instruction in all_instructions:
+        self.list_instructions_settings.addItem(instruction)
+
+    self.list_instructions_settings.setCurrentIndex(self.list_instructions_settings.indexAt(QPoint(0, 0)))
+    self.list_item_selected()
+
+def button_save_selected_press(self: Ui_MainWindow):
+
+    instruction_selected = self.list_instructions_settings.currentItem().text()
+
+    config = load_json_file("ollama_interface_config.json")
+
+    config["instructions"].pop(instruction_selected, None)
+    config["instructions"][self.line_edit_selected_title.text()] = self.plaintext_selected_prompt.toPlainText()
+
+    save_json_file("ollama_interface_config.json", config)
+
+    self.update_instruction_list_settings()
+
+def button_remove_selected_press(self: Ui_MainWindow):
+
+    instruction_selected = self.list_instructions_settings.currentItem().text()
+
+    config = load_json_file("ollama_interface_config.json")
+
+    config["instructions"].pop(instruction_selected, None)
+
+    save_json_file("ollama_interface_config.json", config)
+
+    self.update_instruction_list_settings()
+
+
+def button_add_instruction_press(self: Ui_MainWindow):
+
+    config = load_json_file("ollama_interface_config.json")
+
+    new_instruction = self.line_edit_new_title.text()
+
+    if new_instruction in list(config["instructions"].keys()):
+        
+        msg = QtWidgets.QErrorMessage()
+        msg.showMessage('Instruction already in instruction list!')
+        msg.exec_()
+        
+        return
+    
+    config["instructions"][new_instruction] = self.plaintext_new_prompt.toPlainText()
+
+    save_json_file("ollama_interface_config.json", config)
+
+    self.update_instruction_list_settings()
+
 if __name__ == "__main__":
 
     # print(infer_text("Hello my friendly llm", "qwen2:latest"))
@@ -346,8 +431,14 @@ if __name__ == "__main__":
     setattr(Ui_MainWindow, "settings_menu_bar_clicked", settings_menu_bar_clicked)
     setattr(Ui_MainWindow, "switch_to_small_clicked", switch_to_small_clicked)
 
+    setattr(Ui_MainWindow, "list_item_selected", list_item_selected)
+    setattr(Ui_MainWindow, "update_instruction_list_settings", update_instruction_list_settings)
+
     setattr(Ui_MainWindow, "Clear_Chat", Clear_Chat)
     setattr(Ui_MainWindow, "Add_Letter_To_Running_Chat", Add_Letter_To_Running_Chat)
+    setattr(Ui_MainWindow, "button_save_selected_press", button_save_selected_press)
+    setattr(Ui_MainWindow, "button_remove_selected_press", button_remove_selected_press)
+    setattr(Ui_MainWindow, "button_add_instruction_press", button_add_instruction_press)
     
     setattr(Ui_MainWindow, "Connect_Events", Connect_Events)
 
