@@ -125,6 +125,7 @@ def Connect_Events(self: Ui_MainWindow):
     self.actionPrompt.triggered.connect(self.prompt_menu_bar_clicked)
 
     self.actionSwitch_To_Small.triggered.connect(switch_to_small_clicked)
+    self.actionSwitch_To_Chat.triggered.connect(switch_to_chat_clicked)
 
     self.list_instructions_settings.clicked.connect(self.list_item_selected)
 
@@ -136,6 +137,11 @@ def Connect_Events(self: Ui_MainWindow):
 def switch_to_small_clicked(self: Ui_MainWindow):
 
     subprocess.Popen(["cd", "../ollama_interface_small", "&","pythonw", "ollama_interface.py"], shell=True)
+    QCoreApplication.quit()
+
+def switch_to_chat_clicked(self: Ui_MainWindow):
+
+    subprocess.Popen(["cd", "../ollama_interface_chat", "&","pythonw", "chat_interface.py"], shell=True)
     QCoreApplication.quit()
 
 def Process_Text_Pressed(self: Ui_MainWindow):

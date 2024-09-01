@@ -112,12 +112,18 @@ def Connect_Events(self: Ui_MainWindow):
     self.button_clear_chat.clicked.connect(self.Clear_Chat)
     
     self.actionSwitch_To_Big.triggered.connect(self.switch_to_big_clicked)
+    self.actionSwitch_To_Chat.triggered.connect(self.switch_to_chat_clicked)
 
 def switch_to_big_clicked(self: Ui_MainWindow):
 
     subprocess.Popen(["cd", "../ollama_interface", "&","pythonw", "ollama_interface.py"], shell=True)
     QtCore.QCoreApplication.quit()
 
+
+def switch_to_chat_clicked(self: Ui_MainWindow):
+
+    subprocess.Popen(["cd", "../ollama_interface_chat", "&","pythonw", "chat_interface.py"], shell=True)
+    QtCore.QCoreApplication.quit()
 
 def Process_Text_Prompt_Pressed(self: Ui_MainWindow):
 
@@ -266,6 +272,7 @@ if __name__ == "__main__":
     
     setattr(Ui_MainWindow, "Connect_Events", Connect_Events)
     setattr(Ui_MainWindow, "switch_to_big_clicked", switch_to_big_clicked)
+    setattr(Ui_MainWindow, "switch_to_chat_clicked", switch_to_chat_clicked)
 
     import sys
     app = QtWidgets.QApplication(sys.argv)

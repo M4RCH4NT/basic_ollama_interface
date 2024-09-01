@@ -130,10 +130,19 @@ class Ui_MainWindow(object):
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1564, 21))
         self.menubar.setObjectName("menubar")
+        self.menuMain = QtWidgets.QMenu(self.menubar)
+        self.menuMain.setObjectName("menuMain")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.actionSwitch_To_Small = QtWidgets.QAction(MainWindow)
+        self.actionSwitch_To_Small.setObjectName("actionSwitch_To_Small")
+        self.actionSwitch_To_Big = QtWidgets.QAction(MainWindow)
+        self.actionSwitch_To_Big.setObjectName("actionSwitch_To_Big")
+        self.menuMain.addAction(self.actionSwitch_To_Small)
+        self.menuMain.addAction(self.actionSwitch_To_Big)
+        self.menubar.addAction(self.menuMain.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -146,6 +155,9 @@ class Ui_MainWindow(object):
         self.combo_box_models.setItemText(1, _translate("MainWindow", "Model 2"))
         self.combo_box_models.setItemText(2, _translate("MainWindow", "Model 3"))
         self.text_input_prompt.setPlaceholderText(_translate("MainWindow", "Message Ollama"))
+        self.menuMain.setTitle(_translate("MainWindow", "Main"))
+        self.actionSwitch_To_Small.setText(_translate("MainWindow", "Switch To Small"))
+        self.actionSwitch_To_Big.setText(_translate("MainWindow", "Switch To Big"))
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ from interface.interface import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from time import time
 
-import sys, os, json, ollama
+import sys, os, json, ollama, subprocess
 
 
 def infer_text(text, model):
@@ -136,6 +136,20 @@ def connect_events(self: Ui_MainWindow):
     self.mw.set_call_function(self.button_send_chat_clicked)
 
     self.text_input_prompt.installEventFilter(self.mw)
+
+    self.actionSwitch_To_Big.triggered.connect(self.switch_to_big_clicked)
+    self.actionSwitch_To_Small.triggered.connect(self.switch_to_small_clicked)
+
+def switch_to_big_clicked(self: Ui_MainWindow):
+
+    subprocess.Popen(["cd", "../ollama_interface", "&","pythonw", "ollama_interface.py"], shell=True)
+    QtCore.QCoreApplication.quit()
+
+
+def switch_to_small_clicked(self: Ui_MainWindow):
+
+    subprocess.Popen(["cd", "../ollama_interface_small", "&","pythonw", "ollama_interface.py"], shell=True)
+    QtCore.QCoreApplication.quit()
 
 def setup_states(self: Ui_MainWindow):
     
@@ -653,6 +667,11 @@ if __name__ == "__main__":
     
     setattr(Ui_MainWindow, "add_letter_to_chat", add_letter_to_chat)
     setattr(Ui_MainWindow, "done_adding_letters_to_chat", done_adding_letters_to_chat)
+
+    setattr(Ui_MainWindow, "switch_to_small_clicked", switch_to_small_clicked)
+    setattr(Ui_MainWindow, "switch_to_big_clicked", switch_to_big_clicked)
+
+    switch_to_small_clicked
 
     app = QtWidgets.QApplication(sys.argv)
 

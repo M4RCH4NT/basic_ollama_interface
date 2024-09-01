@@ -141,6 +141,7 @@ p, li { white-space: pre-wrap; }
      <string>Window</string>
     </property>
     <addaction name="actionSwitch_To_Big"/>
+    <addaction name="actionSwitch_To_Chat"/>
    </widget>
    <addaction name="menuPage"/>
   </widget>
@@ -163,6 +164,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionSwitch_To_Big">
    <property name="text">
     <string>Switch To Big</string>
+   </property>
+  </action>
+  <action name="actionSwitch_To_Chat">
+   <property name="text">
+    <string>Switch To Chat</string>
    </property>
   </action>
  </widget>

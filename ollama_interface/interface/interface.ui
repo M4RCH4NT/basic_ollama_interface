@@ -956,13 +956,14 @@
     <addaction name="actionInference"/>
     <addaction name="actionSettings"/>
     <addaction name="actionSwitch_To_Small"/>
+    <addaction name="actionSwitch_To_Chat"/>
    </widget>
    <addaction name="menuWindow"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionPrompt">
    <property name="text">
-    <string>Chat</string>
+    <string>Basic Prompt</string>
    </property>
   </action>
   <action name="actionInference">
@@ -978,6 +979,11 @@
   <action name="actionSwitch_To_Small">
    <property name="text">
     <string>Switch To Small</string>
+   </property>
+  </action>
+  <action name="actionSwitch_To_Chat">
+   <property name="text">
+    <string>Switch To Chat</string>
    </property>
   </action>
  </widget>

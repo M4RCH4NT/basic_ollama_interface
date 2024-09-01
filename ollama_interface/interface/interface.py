@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'interface.ui'
+# Form implementation generated from reading ui file '.\interface.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -440,10 +440,13 @@ class Ui_MainWindow(object):
         self.actionSettings.setObjectName("actionSettings")
         self.actionSwitch_To_Small = QtWidgets.QAction(MainWindow)
         self.actionSwitch_To_Small.setObjectName("actionSwitch_To_Small")
+        self.actionSwitch_To_Chat = QtWidgets.QAction(MainWindow)
+        self.actionSwitch_To_Chat.setObjectName("actionSwitch_To_Chat")
         self.menuWindow.addAction(self.actionPrompt)
         self.menuWindow.addAction(self.actionInference)
         self.menuWindow.addAction(self.actionSettings)
         self.menuWindow.addAction(self.actionSwitch_To_Small)
+        self.menuWindow.addAction(self.actionSwitch_To_Chat)
         self.menubar.addAction(self.menuWindow.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -472,10 +475,11 @@ class Ui_MainWindow(object):
         self.button_process_text_prompt.setText(_translate("MainWindow", "Generate"))
         self.button_clear_chat.setText(_translate("MainWindow", "Clear Chat"))
         self.menuWindow.setTitle(_translate("MainWindow", "Window"))
-        self.actionPrompt.setText(_translate("MainWindow", "Chat"))
+        self.actionPrompt.setText(_translate("MainWindow", "Basic Prompt"))
         self.actionInference.setText(_translate("MainWindow", "Text Inference"))
         self.actionSettings.setText(_translate("MainWindow", "Settings"))
         self.actionSwitch_To_Small.setText(_translate("MainWindow", "Switch To Small"))
+        self.actionSwitch_To_Chat.setText(_translate("MainWindow", "Switch To Chat"))
 
 
 if __name__ == "__main__":

@@ -220,7 +220,7 @@ QRadioButton::indicator:checked:disabled {
 }
 
 QMenuBar {
-  background-color: #455364;
+  background-color: #302F2F;
   padding: 2px;
   border: 1px solid #19232D;
   color: #DFE1E2;
@@ -228,7 +228,7 @@ QMenuBar {
 }
 
 QMenuBar:focus {
-  border: 1px solid #346792;
+  border: 1px solid #302F2F;
 }
 
 QMenuBar::item {
@@ -240,23 +240,23 @@ QMenuBar::item:selected {
   padding: 4px;
   background: transparent;
   border: 0px solid #455364;
-  background-color: #1A72BB;
+  background-color: #302F2F;
 }
 
 QMenuBar::item:pressed {
   padding: 4px;
   border: 0px solid #455364;
-  background-color: #1A72BB;
+  background-color: #302F2F;
   color: #DFE1E2;
   margin-bottom: 0px;
   padding-bottom: 0px;
 }
 
 QMenu {
-  border: 0px solid #455364;
+  border: 0px solid #302F2F;
   color: #DFE1E2;
   margin: 0px;
-  background-color: #37414F;
+  background-color: #302F2F;
   selection-background-color: #1A72BB;
 }
 
@@ -267,18 +267,18 @@ QMenu::separator {
 }
 
 QMenu::item {
-  background-color: #37414F;
+  background-color: #302F2F;
   padding: 4px 24px 4px 28px;
   border: 1px transparent #455364;
 }
 
 QMenu::item:selected {
   color: #DFE1E2;
-  background-color: #1A72BB;
+  background-color: #302F2F;
 }
 
 QMenu::item:pressed {
-  background-color: #1A72BB;
+  background-color: #302F2F;
 }
 
 QMenu::icon {

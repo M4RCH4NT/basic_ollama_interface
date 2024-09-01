@@ -291,8 +291,26 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuMain">
+    <property name="title">
+     <string>Main</string>
+    </property>
+    <addaction name="actionSwitch_To_Small"/>
+    <addaction name="actionSwitch_To_Big"/>
+   </widget>
+   <addaction name="menuMain"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSwitch_To_Small">
+   <property name="text">
+    <string>Switch To Small</string>
+   </property>
+  </action>
+  <action name="actionSwitch_To_Big">
+   <property name="text">
+    <string>Switch To Big</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
