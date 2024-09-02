@@ -153,6 +153,9 @@ def switch_to_small_clicked(self: Ui_MainWindow):
 
 def setup_states(self: Ui_MainWindow):
     
+    if not os.path.exists("chat_history.json"):
+        save_json_file("chat_history.json", {})
+        
     self.messages_vertical_layout.setAlignment(QtCore.Qt.AlignTop)
 
     self.config = load_json_file('config.json')
