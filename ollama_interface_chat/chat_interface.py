@@ -222,7 +222,7 @@ def setup_states(self: Ui_MainWindow):
     self.chat_interface_vertical_layout.setAlignment(QtCore.Qt.AlignTop)
 
     font = QtGui.QFont()
-    font.setPointSize(12)
+    font.setPointSize(self.config["chat_font_size"])
 
     self.markdown_to_html_converter = QtWidgets.QTextEdit(self.centralwidget)
     self.markdown_to_html_converter.setFont(font)
@@ -546,7 +546,7 @@ def create_ai_chat_panel(self: Ui_MainWindow, idx, message_content):
     temp_horizontal_layout.addWidget(temp_label_ai_icon)
     temp_label_ai_message = QtWidgets.QLabel(temp_frame)
     font = QtGui.QFont()
-    font.setPointSize(12)
+    font.setPointSize(self.config["chat_font_size"])
     temp_label_ai_message.setFont(font)
     temp_label_ai_message.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
     temp_label_ai_message.setWordWrap(True)
@@ -606,7 +606,7 @@ def create_user_chat_panel(self: Ui_MainWindow, idx, message_content):
     temp_horizontal_layout.addWidget(temp_space_frame)
     temp_label_user_message = QtWidgets.QLabel(temp_frame)
     font = QtGui.QFont()
-    font.setPointSize(12)
+    font.setPointSize(self.config["chat_font_size"])
     temp_label_user_message.setFont(font)
     temp_label_user_message.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
     temp_label_user_message.setWordWrap(True)
