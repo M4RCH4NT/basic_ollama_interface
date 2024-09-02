@@ -105,6 +105,7 @@ def stream_text(text, model, jsonify = False, system_prompt = ""):
 
         return ollama_iterator
 
+
 class OllamaStreamThread(QtCore.QObject):
 
     chunk_writer = QtCore.pyqtSignal(str)
@@ -127,13 +128,6 @@ class OllamaStreamThread(QtCore.QObject):
 
         self.finished.emit()
         self.kill_thread.emit()
-
-
-
-
-
-
-
 
 
 def load_json_file(filename: str) -> dict:
@@ -528,14 +522,15 @@ def create_ai_chat_panel(self: Ui_MainWindow, idx, message_content):
     self.markdown_to_html_converter.setMarkdown(message_content)
     markdown_content = self.markdown_to_html_converter.toHtml()
 
-
     temp_frame = QtWidgets.QFrame(self.chat_interface_scroll_area_content)
     temp_frame.setFrameShape(QtWidgets.QFrame.NoFrame)
     temp_frame.setFrameShadow(QtWidgets.QFrame.Raised)
     temp_frame.setObjectName(f"ai_frame_{idx}")
+    
     temp_horizontal_layout = QtWidgets.QHBoxLayout(temp_frame)
     temp_horizontal_layout.setAlignment(QtCore.Qt.AlignTop)
     temp_horizontal_layout.setObjectName(f"ai_horizontal_layout_{idx}")
+    
     temp_label_ai_icon = QtWidgets.QLabel(temp_frame)
     temp_label_ai_icon.setMinimumSize(QtCore.QSize(40, 40))
     temp_label_ai_icon.setMaximumSize(QtCore.QSize(40, 40))
@@ -544,6 +539,7 @@ def create_ai_chat_panel(self: Ui_MainWindow, idx, message_content):
     temp_label_ai_icon.setScaledContents(True)
     temp_label_ai_icon.setObjectName(f"ai_label_ai_icon_{idx}")
     temp_horizontal_layout.addWidget(temp_label_ai_icon)
+    
     temp_label_ai_message = QtWidgets.QLabel(temp_frame)
     font = QtGui.QFont()
     font.setPointSize(self.config["chat_font_size"])
@@ -553,6 +549,7 @@ def create_ai_chat_panel(self: Ui_MainWindow, idx, message_content):
     temp_label_ai_message.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
     temp_label_ai_message.setObjectName(f"ai_label_ai_message_{idx}")
     temp_horizontal_layout.addWidget(temp_label_ai_message)
+    
     temp_space_frame = QtWidgets.QFrame(temp_frame)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
     sizePolicy.setHorizontalStretch(0)
@@ -566,6 +563,7 @@ def create_ai_chat_panel(self: Ui_MainWindow, idx, message_content):
     temp_space_frame.setLineWidth(0)
     temp_space_frame.setObjectName(f"ai_spacer_frame_{idx}")
     temp_horizontal_layout.addWidget(temp_space_frame)
+    
     self.chat_interface_vertical_layout.addWidget(temp_frame)
 
     temp_label_ai_message.setText(markdown_content)
@@ -577,20 +575,46 @@ def create_ai_chat_panel(self: Ui_MainWindow, idx, message_content):
 
     self.chat_components.append([temp_frame, temp_horizontal_layout, temp_label_ai_icon, temp_label_ai_message, temp_space_frame])
 
-
 def create_user_chat_panel(self: Ui_MainWindow, idx, message_content):
 
     self.markdown_to_html_converter.setMarkdown(message_content)
     markdown_content = self.markdown_to_html_converter.toHtml()
 
-
     temp_frame = QtWidgets.QFrame(self.chat_interface_scroll_area_content)
     temp_frame.setFrameShape(QtWidgets.QFrame.NoFrame)
     temp_frame.setFrameShadow(QtWidgets.QFrame.Raised)
     temp_frame.setObjectName(f"user_frame_{idx}")
+    
     temp_horizontal_layout = QtWidgets.QHBoxLayout(temp_frame)
     temp_horizontal_layout.setAlignment(QtCore.Qt.AlignTop)
-    temp_horizontal_layout.setObjectName(f"horizontalLayout_2")
+    temp_horizontal_layout.setObjectName(f"horizontalLayout_{idx}")
+    
+    temp_label_user_message = QtWidgets.QLabel(temp_frame)
+    font = QtGui.QFont()
+    font.setPointSize(self.config["chat_font_size"])
+
+    sizePolicy2 = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+    sizePolicy2.setHorizontalStretch(0)
+    sizePolicy2.setVerticalStretch(0)
+    sizePolicy2.setHeightForWidth(temp_label_user_message.sizePolicy().hasHeightForWidth())
+    temp_label_user_message.setSizePolicy(sizePolicy2)
+
+    temp_label_user_message.setFont(font)
+    temp_label_user_message.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+    temp_label_user_message.setWordWrap(True)
+    temp_label_user_message.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+    temp_label_user_message.setObjectName(f"user_label_message_user_{idx}")
+    temp_horizontal_layout.addWidget(temp_label_user_message)
+    
+    temp_label_user_icon = QtWidgets.QLabel(temp_frame)
+    temp_label_user_icon.setMinimumSize(QtCore.QSize(40, 40))
+    temp_label_user_icon.setMaximumSize(QtCore.QSize(40, 40))
+    temp_label_user_icon.setText("")
+    temp_label_user_icon.setPixmap(QtGui.QPixmap(".\\interface\\user.png"))
+    temp_label_user_icon.setScaledContents(True)
+    temp_label_user_icon.setObjectName(f"user_label_user_icon_{idx}")
+    temp_horizontal_layout.addWidget(temp_label_user_icon)
+    
     temp_space_frame = QtWidgets.QFrame(temp_frame)
     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
     sizePolicy.setHorizontalStretch(0)
@@ -603,24 +627,9 @@ def create_user_chat_panel(self: Ui_MainWindow, idx, message_content):
     temp_space_frame.setFrameShadow(QtWidgets.QFrame.Plain)
     temp_space_frame.setLineWidth(0)
     temp_space_frame.setObjectName(f"user_spacer_frame_{idx}")
-    temp_horizontal_layout.addWidget(temp_space_frame)
-    temp_label_user_message = QtWidgets.QLabel(temp_frame)
-    font = QtGui.QFont()
-    font.setPointSize(self.config["chat_font_size"])
-    temp_label_user_message.setFont(font)
-    temp_label_user_message.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-    temp_label_user_message.setWordWrap(True)
-    temp_label_user_message.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-    temp_label_user_message.setObjectName(f"user_label_message_user_{idx}")
-    temp_horizontal_layout.addWidget(temp_label_user_message)
-    temp_label_user_icon = QtWidgets.QLabel(temp_frame)
-    temp_label_user_icon.setMinimumSize(QtCore.QSize(40, 40))
-    temp_label_user_icon.setMaximumSize(QtCore.QSize(40, 40))
-    temp_label_user_icon.setText("")
-    temp_label_user_icon.setPixmap(QtGui.QPixmap(".\\interface\\user.png"))
-    temp_label_user_icon.setScaledContents(True)
-    temp_label_user_icon.setObjectName(f"user_label_user_icon_{idx}")
-    temp_horizontal_layout.addWidget(temp_label_user_icon)
+    # temp_horizontal_layout.addWidget(temp_space_frame)
+    temp_horizontal_layout.insertWidget(0, temp_space_frame)
+
     self.chat_interface_vertical_layout.addWidget(temp_frame)
 
     temp_label_user_message.setText(markdown_content)
@@ -663,6 +672,7 @@ def load_chat_board(self: Ui_MainWindow):
 
         if idx % 2 == 0:
             create_user_chat_panel(self, idx, message_content)
+            # create_ai_chat_panel(self, idx, message_content)
         else:
             create_ai_chat_panel(self, idx, message_content)
 
