@@ -16,6 +16,35 @@ def infer_text(text, model):
 
     return response["message"]["content"]
 
+def get_heading_for_text(message_body, model, base_model = "phi3", max_char = 1000):
+
+    question = message_body[0]
+    answer = message_body[1]
+
+    if len(answer) > max_char :
+        answer = answer[:max_char]
+
+    input_prompt = f"Question: {question}\n\nAnswer: {answer}\n\nGive me a short title that decribes this text. It can only be a few words. Only give me the title."
+
+    try:
+        response = infer_text(input_prompt, base_model)
+    except:
+        response = infer_text(input_prompt, model)
+
+    response = str(response).replace('"', "").replace('*', "").replace('#', "").replace("title:", "").replace("Title:", "").split("\n")[0]
+
+    try:
+        while new_heading[0] == " ":
+            new_heading = new_heading[1:]
+    except:
+        new_heading = None
+
+    if new_heading != None:
+        if len(new_heading) > 100:
+            new_heading = new_heading[:100]
+
+    return response
+
 def stream_text(text, model, jsonify = False, system_prompt = ""):
     
     if type(text) == list:
@@ -303,18 +332,7 @@ def done_adding_letters_to_chat(self):
 
     if message_heading == None and len(self.message_body) > 1:
 
-        new_heading = infer_text(f"Here is a question {self.message_body[0]}. Give me a short title that describes this title. Only give me the title.", self.selected_model)
-
-        new_heading = str(new_heading).replace('"', "").replace('*', "").replace('#', "").replace("title:", "").replace("Title:", "").split("\n")[0]
-
-        try:
-            while new_heading[0] == " ":
-                new_heading = new_heading[1:]
-        except:
-            new_heading = None
-
-        if len(new_heading) > 100:
-            new_heading = new_heading[:100]
+        new_heading = get_heading_for_text(self.message_body, self.selected_model)
 
         chat_history[self.message_entry_key]["message_heading"] = new_heading
 
@@ -353,7 +371,7 @@ def create_message_board_item(self: Ui_MainWindow, idx, message_heading, message
     temp_label.setObjectName(f"message_board_label_{idx}")
     temp_label.setWordWrap(True)
     if make_bold:
-        temp_label.setText(f'<html><head/><body><p><span style=" font-weight:600; color:#348EC9;">{message_heading}</span></p></body></html>')
+        temp_label.setText(f'<html><head/><body><p><span style=" font-weight:600; color:#0bb43b;">{message_heading}</span></p></body></html>')
     else:
         temp_label.setText(message_heading)
         
