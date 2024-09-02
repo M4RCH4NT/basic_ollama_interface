@@ -160,6 +160,7 @@ def connect_events(self: Ui_MainWindow):
     self.button_attach_file.clicked.connect(self.button_attach_file_clicked)
     self.button_new_chat.clicked.connect(self.button_new_chat_clicked)
     self.button_send_chat.clicked.connect(self.button_send_chat_clicked)
+    self.button_hide_message_headers.clicked.connect(self.button_hide_message_headers_clicked) 
 
     self.mw.set_text_box(self.text_input_prompt)
     self.mw.set_call_function(self.button_send_chat_clicked)
@@ -169,10 +170,20 @@ def connect_events(self: Ui_MainWindow):
     self.actionSwitch_To_Big.triggered.connect(self.switch_to_big_clicked)
     self.actionSwitch_To_Small.triggered.connect(self.switch_to_small_clicked)
 
+    self.combo_box_models.currentTextChanged.connect(self.combo_box_models_currentTextChanged)
+
 def switch_to_big_clicked(self: Ui_MainWindow):
 
     subprocess.Popen(["cd", "../ollama_interface", "&","pythonw", "ollama_interface.py"], shell=True)
     QtCore.QCoreApplication.quit()
+
+
+def combo_box_models_currentTextChanged(self, text):
+    if self.finished_loading_models == False:
+        return
+
+    self.config["last_used_model"] = self.combo_box_models.currentText()
+    save_json_file("config.json", self.config)
 
 
 def switch_to_small_clicked(self: Ui_MainWindow):
@@ -197,6 +208,8 @@ def setup_states(self: Ui_MainWindow):
     self.message_body = None
 
     self.processing_message = False
+    self.message_headers_hidden = False
+    self.finished_loading_models = False
 
     icon = QtGui.QIcon()
     icon.addPixmap(QtGui.QPixmap("interface/attach.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -218,6 +231,8 @@ def setup_states(self: Ui_MainWindow):
 
     # Loading ollama models
 
+    last_used_model = self.config["last_used_model"]
+
     self.combo_box_models.clear()
 
     self.all_models = [model_entry["name"] for model_entry in ollama.list()["models"]]
@@ -226,9 +241,22 @@ def setup_states(self: Ui_MainWindow):
     for model_name in self.all_models:
         self.combo_box_models.addItem(model_name)
 
+
+    if last_used_model in self.all_models:
+        self.combo_box_models.setCurrentText(last_used_model)
+        print(last_used_model)
+
+    if last_used_model == None:
+        self.config["last_used_model"] = self.all_models[0]
+        save_json_file("config.json", self.config)
+
+    self.finished_loading_models = True
+
     # Loading messages
 
     self.load_message_board()
+
+
 
 def set_main_window(self: Ui_MainWindow, mw):
     self.mw = mw
@@ -237,7 +265,7 @@ def set_main_window(self: Ui_MainWindow, mw):
 def button_attach_file_clicked(self: Ui_MainWindow):
     if self.processing_message :
         return
-
+    
 def button_send_chat_clicked(self: Ui_MainWindow):
     if self.processing_message :
         return
@@ -282,8 +310,6 @@ def button_send_chat_clicked(self: Ui_MainWindow):
 
     self.thread.start()
 
-
-
 def button_new_chat_clicked(self: Ui_MainWindow):
     
     if self.processing_message :
@@ -311,6 +337,17 @@ def button_new_chat_clicked(self: Ui_MainWindow):
     
     self.load_message_board()
     self.load_chat_board()
+
+def button_hide_message_headers_clicked(self: Ui_MainWindow):
+    
+    if self.message_headers_hidden :
+        self.frame_message_headers.show()
+        self.button_hide_message_headers.setText("<\n<\n<")
+    else:
+        self.frame_message_headers.hide()
+        self.button_hide_message_headers.setText(">\n>\n>")
+
+    self.message_headers_hidden = not self.message_headers_hidden
 
 
 def add_letter_to_chat(self, added_letter):
@@ -673,6 +710,7 @@ if __name__ == "__main__":
     setattr(Ui_MainWindow, "button_attach_file_clicked", button_attach_file_clicked)
     setattr(Ui_MainWindow, "button_send_chat_clicked", button_send_chat_clicked)
     setattr(Ui_MainWindow, "button_new_chat_clicked", button_new_chat_clicked)
+    setattr(Ui_MainWindow, "button_hide_message_headers_clicked", button_hide_message_headers_clicked)
 
     setattr(Ui_MainWindow, "load_message_board", load_message_board)
     setattr(Ui_MainWindow, "delete_message_board", delete_message_board)
@@ -691,6 +729,8 @@ if __name__ == "__main__":
 
     setattr(Ui_MainWindow, "switch_to_small_clicked", switch_to_small_clicked)
     setattr(Ui_MainWindow, "switch_to_big_clicked", switch_to_big_clicked)
+
+    setattr(Ui_MainWindow, "combo_box_models_currentTextChanged", combo_box_models_currentTextChanged)
 
     switch_to_small_clicked
 

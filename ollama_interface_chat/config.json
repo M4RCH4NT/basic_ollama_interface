@@ -1,4 +1,5 @@
 {
     "use_theme": "interface/dark_style_2.qss",
-    "message_board_font_size" : 10
+    "message_board_font_size": 10,
+    "last_used_model": "llama3.1:latest"
 }
