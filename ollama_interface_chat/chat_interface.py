@@ -34,14 +34,14 @@ def get_heading_for_text(message_body, model, base_model = "phi3", max_char = 10
     response = str(response).replace('"', "").replace('*', "").replace('#', "").replace("title:", "").replace("Title:", "").split("\n")[0]
 
     try:
-        while new_heading[0] == " ":
-            new_heading = new_heading[1:]
+        while response[0] == " ":
+            response = response[1:]
     except:
-        new_heading = None
+        response = None
 
-    if new_heading != None:
-        if len(new_heading) > 100:
-            new_heading = new_heading[:100]
+    if response != None:
+        if len(response) > 100:
+            response = response[:100]
 
     return response
 
